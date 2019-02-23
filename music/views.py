@@ -19,7 +19,7 @@ class DisplayTopView(generics.ListAPIView):
 	renderer_classes = [TemplateHTMLRenderer]
 	template_name = 'music/index.html'
 	def get(self,request):
-		queryset=Music.objects.all().order_by("rank")[:50]
+		queryset=Music.objects.all().order_by("rank")
 		serializer_class = SongsSerializer
 		return Response({'songs': queryset})
 
