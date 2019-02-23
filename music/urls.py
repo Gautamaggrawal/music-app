@@ -21,6 +21,7 @@ urlpatterns = [
     path('songs/search/',SearchSong.as_view(),name='searchsong'),
     path('songs/',DisplayTopView.as_view(),name='songs-top'),
     path('getsongdetails/',SongsDetails.as_view(),name='songs-data'),
+    path('filtersongs/',FilterSongs.as_view(),name='filter-song')
 
 ]
 

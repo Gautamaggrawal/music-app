@@ -27,11 +27,56 @@ class DisplayTopView(generics.ListAPIView):
 class SongsDetails(APIView):
 	def get(self,request):
 		data=""
-		song=request.query_params.get("song",None)
+		x=(request.query_params)
+		song=request.query_params.get("rank",None)
 		if song:
-			data=Music.objects.filter(name__exact=song).values('rank',"name","artists","danceability","energy","key","loudness","mode","speechiness","acousticness","instrumentalness","liveness","valence","tempo","duration_ms","time_signature")
+			song=int(song)
+			data=Music.objects.filter(rank__exact=song).values('rank',"name","artists","danceability","energy","key","loudness","mode","speechiness","acousticness","instrumentalness","liveness","valence","tempo","duration_ms","time_signature")
 		return Response({'songs': data})
 
+class FilterSongs(APIView):
+	renderer_classes = [TemplateHTMLRenderer]
+	template_name = 'music/index2.html'
+	def get(self,request):
+		data=Music.objects.all()
+		print(request.query_params)
+		mode=request.query_params.get("mode",None)
+		loudness=request.query_params.get("loudness",None)
+		key=request.query_params.get("key",None)
+		danceability=request.query_params.get("danceability",None)
+
+		if mode:
+			print(mode)
+			data &= Music.objects.filter(mode=mode)
+		print("mode data count",data.count())
+
+		if loudness:
+			print(loudness)
+			if loudness=="<-4.5":
+				data &= Music.objects.filter(loudness__lte=-4.5)
+				print("ss",data.count())
+			elif loudness==">-4.5":
+				data &= Music.objects.filter(loudness__gte=-4.5)
+				print("ssss",data.count())
+		print("dddddddd",data.count())
+
+		if key:
+			if key=="<5":
+				data &= Music.objects.filter(key__lte=5)
+			elif key==">5":
+				data &= Music.objects.filter(key__gte=5)
+
+		if danceability:
+			print("aaaaaaaaa")
+			if danceability=="<0.5":
+				data &= Music.objects.filter(danceability__lt=0.500)
+				print("lll",data.count())
+			elif danceability==">0.5":
+				data &= Music.objects.filter(danceability__gt=0.500)
+				print("aasss",data.count())
+
+
+		return Response({'songs': data.values()})
 
 
 

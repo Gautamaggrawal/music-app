@@ -26,30 +26,7 @@
 <div class="wrapper">
 
     <div class="fresh-table full-color-azure	 full-screen-table">
-    <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
-            Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
-    -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
-
-<!-- Modal -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+       
         <div class="toolbar">
         	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Filters
@@ -84,13 +61,13 @@
 <div class="form-check">
   <input class="form-check-input" type="radio" name="loudness" id="exampleRadios1" value="<-4.5" >
   <label class="form-check-label" for="exampleRadios1">
-    Loudness Greater than 4.5
+    Greater than 4.5
   </label>
 </div>
 <div class="form-check">
   <input class="form-check-input" type="radio" name="loudness" id="exampleRadios2" value=">-4.5">
   <label class="form-check-label" for="exampleRadios2">
-    Loudness less than 4.5
+    less than 4.5
   </label>
 </div>
 
@@ -98,28 +75,17 @@
 <div class="form-check">
   <input class="form-check-input" type="radio" name="key" id="exampleRadios1" value=">5" >
   <label class="form-check-label" for="exampleRadios1">
-     Key Greater than 5
+    Greater than 5
   </label>
 </div>
 <div class="form-check">
   <input class="form-check-input" type="radio" name="key" id="exampleRadios2" value="<5">
   <label class="form-check-label" for="exampleRadios2">
-    Key less than 5
+    less than 5
   </label>
 </div>
 
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="danceability" id="exampleRadios1" value=">0.5" >
-  <label class="form-check-label" for="exampleRadios1">
-     Dancebility Greater than 0.5
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="danceability" id="exampleRadios2" value="<0.5">
-  <label class="form-check-label" for="exampleRadios2">
-    Dancebility less than 0.5
-  </label>
-</div>
+
 
 
 
@@ -141,16 +107,30 @@
             <thead>
                 <th data-field="id">Rank</th>
             	<th data-field="name" data-sortable="true">Name</th>
-            	<th data-field="salary" data-sortable="true">Artist</th>
-            	<th data-field="actions" data-formatter="operateFormatter" ></th>
+            	<th data-field="artists" data-sortable="true">Artist</th>
+                <th data-field="danceability" data-sortable="true">Dancebility</th>
+                <th data-field="mode" data-sortable="true">mode</th>
+                <th data-field="loudness" data-sortable="true">Loudness</th>
+                <th data-field="key" data-sortable="true">key</th>
+
+
+
+            	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
             </thead>
             <tbody>
                 {% for songs in songs %}
                 <tr>
                 <td>{{ songs.rank }}</td>    
                 <td><a href="/api/getsongdetails/?rank={{songs.rank}}">{{ songs.name }}</a></td>	
+            
                 	<td>{{ songs.artists }}</td>
-                	
+                    <td>{{ songs.danceability }}</td>
+                    <td>{{ songs.mode }}</td>
+                    <td>{{ songs.loudness }}</td>
+                    <td>{{ songs.key }}</td>
+
+
+                	<td></td>
                 </tr>
                     {% endfor %}
 
