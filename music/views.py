@@ -25,6 +25,8 @@ class DisplayTopView(generics.ListAPIView):
 
 
 class SongsDetails(APIView):
+	renderer_classes = [TemplateHTMLRenderer]
+	template_name = 'music/details.html'
 	def get(self,request):
 		data=""
 		x=(request.query_params)

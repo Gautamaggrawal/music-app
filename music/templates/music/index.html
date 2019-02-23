@@ -2,6 +2,125 @@
 <html lang="en">
 {% load staticfiles %}
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+	<style type="text/css">
+
+.now.playing .hh {
+	font-family: 'Lobster', cursive;
+	position: relative;
+	color: white;
+	top:-280px;
+	right: 350px
+
+
+}
+#fresh-table td:hover { 
+   background-color: blue;
+     transition: transform .2s; /* Animation */
+
+}
+
+
+td:hover {
+  transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+.playing {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  transform: translateX(-50%) translateY(-50%);
+}
+.playing:after {
+  
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+.now.playing .bar {
+  display: inline-block;
+  position:relative;
+  top: -320px;
+  right: 480px;
+  margin-right: 1px;
+  width: 10px;
+  height: 1px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, blue,#ffffff);
+  color: transparent;
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+.paused.playing .bar {
+  animation-iteration-count: 1;
+}
+.paused.playing:after {
+  content: "Paused (Lame)"
+}
+.n1 {
+  animation-delay: 0.5s;
+}
+.n2 {
+  animation-delay: 0.2s;
+}
+.n3 {
+  animation-delay: 1.2s;
+}
+.n4 {
+  animation-delay: 0.9s;
+}
+.n5 {
+  animation-delay: 2.3s;
+}
+.n6 {
+  animation-delay: 1.3s;
+}
+.n7 {
+  animation-delay: 3.1s;
+}
+.n8 {
+  animation-delay: 1.9s;
+}
+@keyframes pulse {
+  0% {
+    height: 1px;
+    margin-top: 0;
+  }
+  10% {
+    height: 40px;
+    margin-top: -40px;
+  }
+  50% {
+    height: 20px;
+    margin-top: -20px;
+  }
+  60% {
+    height: 30px;
+    margin-top: -30px;
+  }
+  80% {
+    height: 60px;
+    margin-top: -60px;
+  }
+  100% {
+    height: 1px;
+    margin-top: 0;
+  }
+}
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+
+
+    </style>
+
 
     <!-- href={% static "/login/images/icons/favicon.ico" %} /> -->
 	<meta charset="utf-8" />
@@ -23,9 +142,10 @@
         
 </head>
 <body>
+
 <div class="wrapper">
 
-    <div class="fresh-table full-color-azure	 full-screen-table">
+    <div class="fresh-table full-color-azure full-screen-table">
     <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
             Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
     -->
@@ -34,6 +154,18 @@
 </button> -->
 
 <!-- Modal -->
+
+<div class="now playing" id="music" >
+	<h1 class="hh">Music Buzz</h1>
+  <span class="bar n1">A</span>
+  <span class="bar n2">B</span>
+  <span class="bar n3">c</span>
+  <span class="bar n4">D</span>
+  <span class="bar n5">E</span>
+  <span class="bar n6">F</span>
+  <span class="bar n7">G</span>
+  <span class="bar n8">H</span>
+</div>
 
 
 
@@ -51,10 +183,10 @@
 
         
         <div class="toolbar">
-        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="position: relative; left: 800px">
   Filters
 </button>
-            <button id="alertBtn" class="btn btn-default">Alert</button>
+           <!-- <button id="alertBtn" class="btn btn-default">Alert</button> -->
         </div>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,65 +199,75 @@
         </button>
       </div>
 <form action="/api/filtersongs/" method="get">
+<div class="mode" style="display: inline-block;">
+    <h6>&nbsp;Choose Mode</h6>
+    <div class="form-check">
+        
+      &nbsp;<input class="form-check-input" type="radio" name="mode" id="exampleRadios1" value="0" >
+
+      <label class="form-check-label" for="exampleRadios1">
+        &nbsp; Mode 0
+      </label>
+    </div>
+    <div class="form-check">
+
+      &nbsp;<input class="form-check-input" type="radio" name="mode" id="exampleRadios2" value="1">
+      <label class="form-check-label" for="exampleRadios2">
+        &nbsp; Mode 1
+      </label>
+    </div>
+
+</div>
+
+<div class="loudness" style="display: inline-block;">
+    <h6> &nbsp; &nbsp; &nbsp;choose Loudness</h6>
+    <div class="form-check">
+      &nbsp;<input class="form-check-input" type="radio" name="loudness" id="exampleRadios1" value="<-4.5" >
+      <label class="form-check-label" for="exampleRadios1">
+       &nbsp; Loudness Greater than 4.5
+      </label>
+    </div>
+    <div class="form-check">
+      &nbsp;<input class="form-check-input" type="radio" name="loudness" id="exampleRadios2" value=">-4.5">
+      <label class="form-check-label" for="exampleRadios2">
+       &nbsp; Loudness less than 4.5
+      </label>
+    </div>
+</div>
+
+<div class="Key" style="display: inline-block;">
+    <h6>Choose Key</h6>
 
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="mode" id="exampleRadios1" value="0" >
+  &nbsp;&nbsp;<input class="form-check-input" type="radio" name="key" id="exampleRadios1" value=">5" >
   <label class="form-check-label" for="exampleRadios1">
-    Mode 0
+    &nbsp;&nbsp; Key Greater than 5
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="mode" id="exampleRadios2" value="1">
+  &nbsp; <input class="form-check-input" type="radio" name="key" id="exampleRadios2" value="<5">
   <label class="form-check-label" for="exampleRadios2">
-    Mode 1
+  &nbsp;&nbsp;  Key less than 5
   </label>
 </div>
 
+</div>
+<div class="Dancebility" style="display: inline-block;">
+ <h6>&nbsp;&nbsp;choose Dancebility</h6>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="loudness" id="exampleRadios1" value="<-4.5" >
+  &nbsp;<input class="form-check-input" type="radio" name="danceability" id="exampleRadios1" value=">0.5" >
   <label class="form-check-label" for="exampleRadios1">
-    Loudness Greater than 4.5
+    &nbsp;  Dancebility Greater than 0.5
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="loudness" id="exampleRadios2" value=">-4.5">
+ &nbsp; <input class="form-check-input" type="radio" name="danceability" id="exampleRadios2" value="<0.5">
   <label class="form-check-label" for="exampleRadios2">
-    Loudness less than 4.5
+   &nbsp; Dancebility less than 0.5
   </label>
 </div>
-
-
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="key" id="exampleRadios1" value=">5" >
-  <label class="form-check-label" for="exampleRadios1">
-     Key Greater than 5
-  </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="key" id="exampleRadios2" value="<5">
-  <label class="form-check-label" for="exampleRadios2">
-    Key less than 5
-  </label>
-</div>
-
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="danceability" id="exampleRadios1" value=">0.5" >
-  <label class="form-check-label" for="exampleRadios1">
-     Dancebility Greater than 0.5
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="danceability" id="exampleRadios2" value="<0.5">
-  <label class="form-check-label" for="exampleRadios2">
-    Dancebility less than 0.5
-  </label>
-</div>
-
-
-
-
-
-  <input type="submit" value="Submit">
+  <input style="background-color: #4CAF50;border: 2px solid #4CAF50;height:35px;  border-radius: 20px;color:black;margin-left:87%;position:relative; top:-10px;" type="submit" value="Submit">
 
 </form>
 
@@ -135,11 +277,15 @@
       </div>
     </div>
   </div>
-</div>
+</div>        
+
+
+
+
         
-        <table id="fresh-table" class="table">
+        <table id="fresh-table" class="table" style="background-color: #5DADE2">
             <thead>
-                <th data-field="id">Rank</th>
+                <th data-field="id" >Rank</th>
             	<th data-field="name" data-sortable="true">Name</th>
             	<th data-field="salary" data-sortable="true">Artist</th>
             	<th data-field="actions" data-formatter="operateFormatter" ></th>
@@ -147,9 +293,11 @@
             <tbody>
                 {% for songs in songs %}
                 <tr>
+        
                 <td>{{ songs.rank }}</td>    
-                <td><a href="/api/getsongdetails/?rank={{songs.rank}}">{{ songs.name }}</a></td>	
-                	<td>{{ songs.artists }}</td>
+
+                <td><a  href="/api/getsongdetails/?rank={{songs.rank}}">{{ songs.name }}</a></td>	
+                	<td id=artist >{{ songs.artists }}</td>
                 	
                 </tr>
                     {% endfor %}
@@ -172,7 +320,7 @@
     <script type="text/javascript">
         var $table = $('#fresh-table'),
             $alertBtn = $('#alertBtn'), 
-            full_screen = false,
+            full_screen = true,
             window_height;
             
         $().ready(function(){
