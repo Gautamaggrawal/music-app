@@ -100,7 +100,7 @@ requests==2.21.0
 requests-oauthlib==1.2.0
 requests-unixsocket==0.1.5
 rjsmin==1.0.12
-Scrapy==1.5.1
+Scrapy==1.8.2
 scrapy-djangoitem==1.1.1
 scrapyd==1.2.0
 SecretStorage==2.3.1
